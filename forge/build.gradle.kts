@@ -8,9 +8,6 @@ loom {
     accessWidenerPath.set(project(":common").loom.accessWidenerPath)
 
     forge {
-        convertAccessWideners.set(true)
-        extraAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
-
         mixinConfig("${modId}.mixins.json")
     }
 
@@ -28,9 +25,6 @@ dependencies {
     modApi(libs.forge.architectury)
 
     modImplementation(libs.forge.manual)
-
-    // Not used by mod, just for dev convenience.
-    modRuntimeOnly(libs.forge.justEnoughItems)
 }
 
 tasks {
@@ -47,5 +41,9 @@ tasks {
         filesMatching("META-INF/mods.toml") {
             expand(properties)
         }
+    }
+
+    remapJar {
+        atAccessWideners.add("${modId}.accesswidener")
     }
 }

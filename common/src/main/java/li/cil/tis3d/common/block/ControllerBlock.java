@@ -1,5 +1,6 @@
 package li.cil.tis3d.common.block;
 
+import com.mojang.serialization.MapCodec;
 import li.cil.tis3d.common.block.entity.BlockEntities;
 import li.cil.tis3d.common.block.entity.ControllerBlockEntity;
 import li.cil.tis3d.common.item.Items;
@@ -13,12 +14,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nullable;
@@ -27,12 +26,17 @@ import javax.annotation.Nullable;
  * Block for the controller driving the casings.
  */
 public final class ControllerBlock extends BaseEntityBlock {
-    public ControllerBlock() {
-        super(Properties
-            .of()
-            .mapColor(MapColor.METAL)
-            .sound(SoundType.METAL)
-            .strength(1.5f, 6f));
+    public static final MapCodec<ControllerBlock> CODEC = simpleCodec(ControllerBlock::new);
+
+    // --------------------------------------------------------------------- //
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    public ControllerBlock(Properties properties) {
+        super(properties);
     }
 
     // --------------------------------------------------------------------- //

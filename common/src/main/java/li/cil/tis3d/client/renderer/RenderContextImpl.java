@@ -76,7 +76,7 @@ public final class RenderContextImpl implements RenderContext {
 
     @Override
     public void drawAtlasQuadLit(final ResourceLocation location) {
-        final VertexConsumer builder = buffer.getBuffer(RenderType.translucentNoCrumbling());
+        final VertexConsumer builder = buffer.getBuffer(RenderType.translucent());
         drawAtlasQuad(builder, getSprite(location), 0, 0, 1, 1, 0, 0, 1, 1, Color.WHITE);
     }
 

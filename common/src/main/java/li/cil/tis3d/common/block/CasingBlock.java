@@ -1,5 +1,6 @@
 package li.cil.tis3d.common.block;
 
+import com.mojang.serialization.MapCodec;
 import li.cil.tis3d.api.machine.Face;
 import li.cil.tis3d.api.machine.Port;
 import li.cil.tis3d.api.module.Module;
@@ -27,12 +28,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -44,6 +44,8 @@ import java.util.Optional;
  * Block for the module casings.
  */
 public class CasingBlock extends BaseEntityBlock {
+    public static final MapCodec<CasingBlock> CODEC = simpleCodec(CasingBlock::new);
+
     public static final BooleanProperty MODULE_X_NEG = BooleanProperty.create("xneg");
     public static final BooleanProperty MODULE_X_POS = BooleanProperty.create("xpos");
     public static final BooleanProperty MODULE_Y_NEG = BooleanProperty.create("yneg");
@@ -64,12 +66,13 @@ public class CasingBlock extends BaseEntityBlock {
 
     // --------------------------------------------------------------------- //
 
-    public CasingBlock() {
-        super(Properties
-            .of()
-            .mapColor(MapColor.METAL)
-            .sound(SoundType.METAL)
-            .strength(1.5f, 6f));
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    public CasingBlock(BlockBehaviour.Properties properties) {
+        super(properties);
 
         BlockState defaultState = getStateDefinition().any();
         for (final BooleanProperty value : FACE_TO_PROPERTY.values()) {

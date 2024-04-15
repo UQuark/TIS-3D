@@ -22,6 +22,13 @@ loom {
     }
 }
 
+repositories {
+    exclusiveContent {
+        forRepository { maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") }
+        filter { includeGroup("fuzs.forgeconfigapiport") }
+    }
+}
+
 dependencies {
     modImplementation(libs.fabric.loader)
     modApi(libs.fabric.api)

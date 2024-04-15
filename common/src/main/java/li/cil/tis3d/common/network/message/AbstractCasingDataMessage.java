@@ -7,6 +7,7 @@ import li.cil.tis3d.api.machine.Face;
 import li.cil.tis3d.api.module.Module;
 import li.cil.tis3d.common.block.entity.CasingBlockEntity;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
@@ -39,7 +40,7 @@ public abstract class AbstractCasingDataMessage extends AbstractMessageWithPosit
                         if (isCompoundTag) {
                             try {
                                 final ByteBufInputStream bis = new ByteBufInputStream(packet);
-                                final CompoundTag tag = NbtIo.readCompressed(bis);
+                                final CompoundTag tag = NbtIo.readCompressed(bis, NbtAccounter.unlimitedHeap());
                                 module.onData(tag);
                             } catch (final IOException e) {
                                 LOGGER.warn("Invalid packet received.", e);
