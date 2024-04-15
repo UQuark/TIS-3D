@@ -1,5 +1,6 @@
 package li.cil.tis3d.common.entity;
 
+import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import dev.architectury.networking.NetworkManager;
 import li.cil.tis3d.api.infrared.InfraredPacket;
@@ -10,6 +11,7 @@ import li.cil.tis3d.util.Raytracing;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -34,7 +36,7 @@ import java.util.Optional;
 /**
  * Represents a single value in transmission, sent by an {@link InfraredModule}.
  */
-public final class InfraredPacketEntity extends Entity implements InfraredPacket {
+public final class InfraredPacketEntity extends Entity implements EntitySpawnExtension, InfraredPacket {
     // --------------------------------------------------------------------- //
     // Computed data
 
@@ -192,6 +194,17 @@ public final class InfraredPacketEntity extends Entity implements InfraredPacket
     @Override
     public boolean shouldRenderAtSqrDistance(final double distance) {
         return false;
+    }
+
+    // --------------------------------------------------------------------- //
+    // EntitySpawnExtension
+
+    @Override
+    public void saveAdditionalSpawnData(FriendlyByteBuf buf) {
+    }
+
+    @Override
+    public void loadAdditionalSpawnData(FriendlyByteBuf buf) {
     }
 
     // --------------------------------------------------------------------- //
