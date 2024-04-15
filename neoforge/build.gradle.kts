@@ -28,7 +28,7 @@ dependencies {
     neoForge(libs.neoforge.platform)
     modImplementation(libs.neoforge.architectury)
 
-//    modImplementation(libs.neoforge.manual)
+    modImplementation(libs.neoforge.manual)
 }
 
 tasks {
