@@ -55,6 +55,7 @@ abstract class AbstractInstructionEmitter implements InstructionEmitter {
             }
         }
     }
+
     static Object checkTargetOrNumberOrLabel(String name, final int lineNumber, final Map<String, String> defines, final int start, final int end) throws ParseException {
         name = defines.getOrDefault(name, name);
         try {

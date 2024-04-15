@@ -15,12 +15,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 
 public final class MoveInstructionEmitter extends AbstractInstructionEmitter {
-    private static void validateLabel(final MachineState state, final String label, final Matcher matcher, final int lineNumber) throws ParseException {
-        if (!state.labels.containsKey(label)) {
-            throw new ParseException(Strings.MESSAGE_LABEL_NOT_FOUND, lineNumber, matcher.start("arg1"), matcher.end("arg1"));
-        }
-    }
-
     @Override
     public Instruction compile(final Matcher matcher, final int lineNumber, final Map<String, String> defines, final List<Validator> validators) throws ParseException {
         final Object src = checkTargetOrNumberOrLabel(checkArg(lineNumber, matcher, "arg1", "name"),
@@ -33,12 +27,18 @@ public final class MoveInstructionEmitter extends AbstractInstructionEmitter {
             return new MoveInstruction(target, dst);
         } else if (src instanceof final Short value) {
             return new MoveImmediateInstruction(value, dst);
-        } else if (src instanceof String){
+        } else if (src instanceof String) {
             final String label = checkArg(lineNumber, matcher, "arg1", "name");
             validators.add(state -> validateLabel(state, label, matcher, lineNumber));
             return new MoveLabelInstruction(label, dst);
         } else {
             throw new AssertionError();
+        }
+    }
+
+    private static void validateLabel(final MachineState state, final String label, final Matcher matcher, final int lineNumber) throws ParseException {
+        if (!state.labels.containsKey(label)) {
+            throw new ParseException(Strings.MESSAGE_LABEL_NOT_FOUND, lineNumber, matcher.start("arg1"), matcher.end("arg1"));
         }
     }
 }
