@@ -18,6 +18,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,15 +32,16 @@ public abstract class MixinCasingBlockEntity extends BlockEntity {
         super(type, pos, state);
     }
 
+    @Unique
     @SuppressWarnings("DataFlowIssue")
-    private CasingBlockEntity asCasingBlockEntity() {
+    private CasingBlockEntity tis3d$asCasingBlockEntity() {
         return (CasingBlockEntity) (Object) this;
     }
 
     @Override
     public void onChunkUnloaded() {
         super.onChunkUnloaded();
-        asCasingBlockEntity().dispose();
+        tis3d$asCasingBlockEntity().dispose();
     }
 
     @Override
@@ -54,7 +56,7 @@ public abstract class MixinCasingBlockEntity extends BlockEntity {
             return LazyOptional.empty();
         }
 
-        final Module module = asCasingBlockEntity().getModule(Face.fromDirection(facing));
+        final Module module = tis3d$asCasingBlockEntity().getModule(Face.fromDirection(facing));
         if (module instanceof final ICapabilityProvider capabilityProvider) {
             return capabilityProvider.getCapability(capability, facing);
         }

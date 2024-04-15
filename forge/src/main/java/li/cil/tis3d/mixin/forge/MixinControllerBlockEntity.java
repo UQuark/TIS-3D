@@ -6,6 +6,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(ControllerBlockEntity.class)
 public abstract class MixinControllerBlockEntity extends BlockEntity {
@@ -13,14 +14,15 @@ public abstract class MixinControllerBlockEntity extends BlockEntity {
         super(type, pos, state);
     }
 
+    @Unique
     @SuppressWarnings("DataFlowIssue")
-    private ControllerBlockEntity asControllerBlockEntity() {
+    private ControllerBlockEntity tis3d$asControllerBlockEntity() {
         return (ControllerBlockEntity) (Object) this;
     }
 
     @Override
     public void onChunkUnloaded() {
         super.onChunkUnloaded();
-        asControllerBlockEntity().dispose();
+        tis3d$asControllerBlockEntity().dispose();
     }
 }
