@@ -186,7 +186,7 @@ public final class Compiler {
     // --------------------------------------------------------------------- //
 
     private static final Pattern PATTERN_COMMENT = Pattern.compile("#.*$");
-    private static final Pattern PATTERN_DEFINE = Pattern.compile("#DEFINE\\s+(?<key>\\S+)\\s*(?<value>\\S+)\\s*$");
+    private static final Pattern PATTERN_DEFINE = Pattern.compile("(#DEF|#DEFINE)\\s+(?<key>\\S+)\\s*(?<value>\\S+)\\s*(#.*)?$");
     private static final Pattern PATTERN_UNDEFINE = Pattern.compile("#UNDEF\\s+(?<key>\\S+)\\s*$");
     private static final Pattern PATTERN_LINE = Pattern.compile("^\\s*(?:(?<label>[^:\\s]+)\\s*:\\s*)?(?:(?<name>\\S+)\\s*(?<arg1>[^,\\s]+)?\\s*,?\\s*(?<arg2>[^,\\s]+)?\\s*(?<excess>.+)?)?\\s*$");
     private static final String INSTRUCTION_NO_NAME = "NOP";
